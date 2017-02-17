@@ -1,0 +1,24 @@
+stages:
+  - build
+  - deploy
+
+epmanage:
+  stage: build
+  script:
+    - python3 setup.py bdist_wheel
+  artifacts:
+    paths:
+      - dist/*.whl
+    expire_in: 1 week
+  tags:
+    - linux
+
+deployprod:
+  stage: deploy
+  script:
+    - python3 /srv/scripts/deploy_epmanage.py
+  when: manual
+  environment:
+    name: production
+  tags:
+    - deploy_prod

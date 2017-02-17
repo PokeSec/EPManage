@@ -1,0 +1,36 @@
+<html>
+<body style="margin: 0; padding: 0; background: rgb(235, 235, 235) !important; font-family: 'Roboto','Helvetica','Arial',sans-serif !important;">
+	<table border="0" align="center" cellpadding="0" cellspacing="0" width="555" style="border-collapse: collapse;">
+		<tr>
+			<td>
+				<img src="cid:epmanage.png" alt="EPManage" width="250" style="display: block; margin: auto; padding: 40px 0 30px 0;" />
+			</td>
+		</tr>
+		<tr>
+			<td align="center" style="background-color: #19242f; color: white; padding: 1rem;">
+				<table border="0" align="center" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+					<tr>
+						<td>
+							<p style="color: rgb(235,235,235); text-decoration: none;">A password reset request for has been received for {{ USER_EMAIL }}.
+							If you did not ask for a password reset, you can ignore this email.</p>
+							<span style="display: inline-block; border-radius: 4px; background: rgb(233, 30, 99); border-bottom: 2px solid rgb(233, 30, 99);">
+							<a href="{{ URL_TO_RESET }}" style="text-align: center; margin: auto; color: white; font-weight: normal; text-decoration: none; word-break: break-word; font-size: 20px; line-height: 26px; border-top: 14px solid; border-bottom: 14px solid; border-right: 32px solid; border-left: 32px solid; background-color: rgb(233, 30, 99); border-color: rgb(233, 30, 99); display: inline-block; letter-spacing: 1px; min-width: 80px; text-align: center; border-radius: 4px; text-shadow: 0 1px 1px rgba(0,0,0,0.25);">
+									Reset password
+								</a>
+							</span>
+							<p style="color: rgb(235,235,235); font-size: 0.9em;">
+								You may copy/paste this link into your browser:<br><a style="color: rgb(235,235,235); text-decoration: none" href="{{ URL_TO_RESET }}">{{ URL_TO_RESET }}</a>
+							</p>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="display: block; height: 100px;"></div>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

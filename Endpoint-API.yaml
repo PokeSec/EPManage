@@ -1,0 +1,315 @@
+swagger: '2.0'
+info:
+  title: EPManage API
+  description: Manage your Endpoints
+  version: "0.0.1"
+host: api.pokesec
+schemes:
+  - https
+basePath: /
+produces:
+  - application/json
+consumes:
+  - application/json
+tags:
+  - name: EPControl
+  - name: authentication
+  - name: data
+paths:
+  # Agent paths
+  /auth:
+    post:
+      description: |
+        Authenticate an agent
+      parameters:
+        - name: body
+          in: body
+          description: Authentication data
+          required: true
+          schema:
+            $ref: '#/definitions/AuthData'
+      responses:
+        '200':
+          description: Authentication successful, returns the JWT token
+          schema:
+            type: string
+        '503':
+          description: Authentication has failed
+      tags:
+        - EPControl
+        - authentication
+
+  /auth/enroll:
+    post:
+      description: |
+        Enroll an agent
+      parameters:
+        - name: body
+          in: body
+          description: Enrollment data
+          required: true
+          schema:
+            $ref: '#/definitions/AuthData'
+      responses:
+        '200':
+          description: Enrollment successful, returns the agent token
+          schema:
+            type: string
+        '503':
+          description: Enrollment has failed
+      tags:
+        - EPControl
+        - authentication
+
+  /code/manifest:
+    get:
+      description: |
+        Get the distributed code manifest
+      parameters:
+        - name: cur
+          in: query
+          description: Current manifest timestamp
+          required: false
+          type: integer
+          format: long
+      responses:
+        '200':
+          description: Returns the current manifest
+          schema:
+            type: file
+        '304':
+          description: No new manifest available
+        '404':
+          description: No manifest is available for the current agent
+      security:
+        - agent_auth:
+          - urn:code
+      tags:
+        - EPControl
+
+  /code/pkg:
+    get:
+      description: |
+        Get a distributed code package
+      parameters:
+        - name: id
+          in: query
+          description: Package identifier
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Returns the required package
+          schema:
+            type: file
+        '404':
+          description: Unknown package
+      security:
+        - agent_auth:
+          - urn:code
+      tags:
+        - EPControl
+
+  /data/blob/{blobid}:
+    get:
+      description: |
+        Get a data blob
+      parameters:
+        - name: blobid
+          in: path
+          description: Data identifier
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Returns the required blob
+          schema:
+            type: file
+        '404':
+          description: Unknown blob
+      security:
+        - agent_auth:
+          - urn:data
+      tags:
+        - EPControl
+        - data
+    post:
+      description: |
+        Store a data blob
+      parameters:
+        - name: blobid
+          in: path
+          description: Data identifier
+          required: true
+          type: string
+        - name: body
+          in: body
+          description: Data to store
+          required: true
+          schema:
+            type: string
+            format: binary
+      responses:
+        '201':
+          description: Blob has been stored successfully
+        '400':
+          description: Blob has not been stored
+      security:
+        - agent_auth:
+          - urn:data
+      tags:
+        - EPControl
+        - data
+
+  /data/report:
+    post:
+      description: |
+        Store report data in Elasticsearch
+      parameters:
+        - name: body
+          in: body
+          description: Data to store (any object)
+          required: true
+          schema:
+            type: object
+      responses:
+        '201':
+          description: Data has been stored successfully
+        '400':
+          description: Data has not been stored
+      security:
+        - agent_auth:
+          - urn:data
+      tags:
+        - EPControl
+        - data
+
+  /data/debug:
+    post:
+      description: |
+        Store a debug blob
+      parameters:
+        - name: body
+          in: body
+          description: Data to store
+          required: true
+          schema:
+            type: string
+            format: binary
+      responses:
+        '201':
+          description: Blob has been stored successfully
+        '400':
+          description: Blob has not been stored
+      security:
+        - agent_auth:
+          - urn:data
+      tags:
+        - EPControl
+        - data
+
+  /data/assets/{assetid}:
+    get:
+      description: |
+        Get an asset package
+      parameters:
+        - name: assetid
+          in: path
+          description: Asset identifier
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Returns the required asset
+          schema:
+            type: file
+        '404':
+          description: Unknown asset
+      tags:
+        - EPControl
+        - data
+
+  /route/list:
+    get:
+      description: |
+        Get the routes for the different API endpoints
+      responses:
+        '200':
+          description: |
+            Routes to use (key: url)
+          schema:
+            type: object
+      security:
+        - agent_auth:
+          - urn:router
+      tags:
+        - EPControl
+
+  /task:
+    get:
+      description: |
+        Get the tasks to run
+      responses:
+        '200':
+          description: |
+            Tasks to run
+          schema:
+            $ref: '#/definitions/TaskData'
+      security:
+        - agent_auth:
+          - urn:task
+      tags:
+        - EPControl
+
+securityDefinitions:
+  agent_auth:
+    type: oauth2
+    description: Agent authentication (Bearer JWT token)
+    flow: implicit
+    authorizationUrl: api.pokesec/auth
+    scopes:
+      urn:code: Allow to get code
+      urn:data: Allow to get and store data
+      urn:router: Allow to get routes
+      urn:task: Allow to get tasks
+
+definitions:
+  AuthData:
+    type: object
+    properties:
+      instance:
+        type: string
+        description: Unique identifier of the client instance
+      token:
+        type: string
+        description: Unique identifer for the current agent
+      version:
+        type: string
+        description: EPControl version
+        
+  TaskData:
+    type: object
+    properties:
+      active:
+        type: object
+      stop:
+        type: array
+        items:
+          type: string
+      poll_delay:
+        type: integer
+      logger_config:
+        type: object
+      preview_upload:
+        type: string
+      preview_download:
+        type: object
+        properties:
+          path:
+            type: string
+          key:
+            type: string
+      preview_run_command:
+        type: string
+      preview_cleancache:
+        type: string

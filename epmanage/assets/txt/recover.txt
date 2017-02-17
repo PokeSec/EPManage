@@ -1,0 +1,6 @@
+Hello,
+
+A password reset request has been received for {{ USER_EMAIL }}. If you did not ask for a password reset, your can
+ignore this email.
+
+To reset your password, please click on the following link : {{ URL_TO_RESET }}

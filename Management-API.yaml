@@ -1,0 +1,954 @@
+swagger: '2.0'
+info:
+  description: Management API
+  title: EPManage API
+  version: '0.1'
+host: api.pokesec
+schemes:
+  - https
+basePath: /
+produces:
+  - application/json
+consumes:
+  - application/json
+tags:
+  - name: app
+  - name: Client
+  - name: user
+  - name: filter
+  - name: policy
+  - name: agent
+
+parameters:
+  Client__id:
+    description: ''
+    format: objectid
+    in: path
+    name: clientId
+    required: true
+    type: string
+  Oplog__id:
+    description: ''
+    format: objectid
+    in: path
+    name: oplogId
+    required: true
+    type: string
+  agent__id:
+    description: ''
+    format: objectid
+    in: path
+    name: agentId
+    required: true
+    type: string
+  app__id:
+    description: ''
+    format: objectid
+    in: path
+    name: appId
+    required: true
+    type: string
+  filter__id:
+    description: ''
+    format: objectid
+    in: path
+    name: filterId
+    required: true
+    type: string
+  policy__id:
+    description: ''
+    format: objectid
+    in: path
+    name: policyId
+    required: true
+    type: string
+  user__id:
+    description: ''
+    format: objectid
+    in: path
+    name: userId
+    required: true
+    type: string
+
+paths:
+  /agent:
+    get:
+      responses:
+        '200':
+          description: An array of agent
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/agent'
+      summary: Retrieves one or more agent
+      tags:
+        - agent
+    post:
+      parameters:
+        - in: body
+          name: agent
+          required: true
+          schema:
+            $ref: '#/definitions/agent'
+      responses:
+        '200':
+          description: operation has been successful
+      summary: Stores one or more agent
+      tags:
+        - agent
+  '/agent/{agentId}':
+    delete:
+      parameters:
+        - $ref: '#/parameters/agent__id'
+        - description: Current value of the _etag field
+          in: header
+          name: If-Match
+          required: true
+          type: string
+      responses:
+        '200':
+          description: agent document deleted successfully
+      summary: Deletes a agent document
+      tags:
+        - agent
+    get:
+      parameters:
+        - $ref: '#/parameters/agent__id'
+      responses:
+        '200':
+          description: agent document fetched successfully
+          schema:
+            $ref: '#/definitions/agent'
+      summary: Retrieves a agent document
+      tags:
+        - agent
+    patch:
+      parameters:
+        - $ref: '#/parameters/agent__id'
+        - in: body
+          name: agent
+          required: true
+          schema:
+            $ref: '#/definitions/agent'
+        - description: Current value of the _etag field
+          in: header
+          name: If-Match
+          required: true
+          type: string
+      responses:
+        '200':
+          description: agent document updated successfully
+      summary: Updates a agent document
+      tags:
+        - agent
+    put:
+      parameters:
+        - $ref: '#/parameters/agent__id'
+        - in: body
+          name: agent
+          required: true
+          schema:
+            $ref: '#/definitions/agent'
+        - description: Current value of the _etag field
+          in: header
+          name: If-Match
+          required: true
+          type: string
+      responses:
+        '200':
+          description: agent document replaced successfully
+      summary: Replaces a agent document
+      tags:
+        - agent
+  /app:
+    get:
+      responses:
+        '200':
+          description: An array of app
+          schema:
+            items:
+              $ref: '#/definitions/app'
+            type: array
+      summary: Retrieves one or more app
+      tags:
+        - app
+    post:
+      parameters:
+        - in: body
+          name: app
+          required: true
+          schema:
+            $ref: '#/definitions/app'
+      responses:
+        '200':
+          description: operation has been successful
+      summary: Stores one or more app
+      tags:
+        - app
+  '/app/{appId}':
+    delete:
+      parameters:
+        - $ref: '#/parameters/app__id'
+        - description: Current value of the _etag field
+          in: header
+          name: If-Match
+          required: true
+          type: string
+      responses:
+        '200':
+          description: app document deleted successfully
+      summary: Deletes a app document
+      tags:
+        - app
+    get:
+      parameters:
+        - $ref: '#/parameters/app__id'
+      responses:
+        '200':
+          description: app document fetched successfully
+          schema:
+            $ref: '#/definitions/app'
+      summary: Retrieves a app document
+      tags:
+        - app
+    patch:
+      parameters:
+        - $ref: '#/parameters/app__id'
+        - in: body
+          name: app
+          required: true
+          schema:
+            $ref: '#/definitions/app'
+        - description: Current value of the _etag field
+          in: header
+          name: If-Match
+          required: true
+          type: string
+      responses:
+        '200':
+          description: app document updated successfully
+      summary: Updates a app document
+      tags:
+        - app
+    put:
+      parameters:
+        - $ref: '#/parameters/app__id'
+        - in: body
+          name: app
+          required: true
+          schema:
+            $ref: '#/definitions/app'
+        - description: Current value of the _etag field
+          in: header
+          name: If-Match
+          required: true
+          type: string
+      responses:
+        '200':
+          description: app document replaced successfully
+      summary: Replaces a app document
+      tags:
+        - app
+  /audit:
+    get:
+      responses:
+        '200':
+          description: An array of audit
+          schema:
+            items:
+              $ref: '#/definitions/Oplog'
+            type: array
+      summary: Retrieves one or more audit
+      tags:
+        - Oplog
+  '/audit/{oplogId}':
+    get:
+      parameters:
+        - $ref: '#/parameters/Oplog__id'
+      responses:
+        '200':
+          description: Oplog document fetched successfully
+          schema:
+            $ref: '#/definitions/Oplog'
+      summary: Retrieves a Oplog document
+      tags:
+        - Oplog
+  /client:
+    get:
+      responses:
+        '200':
+          description: An array of client
+          schema:
+            items:
+              $ref: '#/definitions/Client'
+            type: array
+      summary: Retrieves one or more client
+      tags:
+        - Client
+    post:
+      parameters:
+        - in: body
+          name: Client
+          required: true
+          schema:
+            $ref: '#/definitions/Client'
+      responses:
+        '200':
+          description: operation has been successful
+      summary: Stores one or more client
+      tags:
+        - Client
+  '/client/{clientId}':
+    delete:
+      parameters:
+        - $ref: '#/parameters/Client__id'
+        - description: Current value of the _etag field
+          in: header
+          name: If-Match
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Client document deleted successfully
+      summary: Deletes a Client document
+      tags:
+        - Client
+    get:
+      parameters:
+        - $ref: '#/parameters/Client__id'
+      responses:
+        '200':
+          description: Client document fetched successfully
+          schema:
+            $ref: '#/definitions/Client'
+      summary: Retrieves a Client document
+      tags:
+        - Client
+    patch:
+      parameters:
+        - $ref: '#/parameters/Client__id'
+        - in: body
+          name: Client
+          required: true
+          schema:
+            $ref: '#/definitions/Client'
+        - description: Current value of the _etag field
+          in: header
+          name: If-Match
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Client document updated successfully
+      summary: Updates a Client document
+      tags:
+        - Client
+    put:
+      parameters:
+        - $ref: '#/parameters/Client__id'
+        - in: body
+          name: Client
+          required: true
+          schema:
+            $ref: '#/definitions/Client'
+        - description: Current value of the _etag field
+          in: header
+          name: If-Match
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Client document replaced successfully
+      summary: Replaces a Client document
+      tags:
+        - Client
+  /filter:
+    get:
+      responses:
+        '200':
+          description: An array of filter
+          schema:
+            items:
+              $ref: '#/definitions/filter'
+            type: array
+      summary: Retrieves one or more filter
+      tags:
+        - filter
+    post:
+      parameters:
+        - in: body
+          name: filter
+          required: true
+          schema:
+            $ref: '#/definitions/filter'
+      responses:
+        '200':
+          description: operation has been successful
+      summary: Stores one or more filter
+      tags:
+        - filter
+  '/filter/{filterId}':
+    delete:
+      parameters:
+        - $ref: '#/parameters/filter__id'
+        - description: Current value of the _etag field
+          in: header
+          name: If-Match
+          required: true
+          type: string
+      responses:
+        '200':
+          description: filter document deleted successfully
+      summary: Deletes a filter document
+      tags:
+        - filter
+    get:
+      parameters:
+        - $ref: '#/parameters/filter__id'
+      responses:
+        '200':
+          description: filter document fetched successfully
+          schema:
+            $ref: '#/definitions/filter'
+      summary: Retrieves a filter document
+      tags:
+        - filter
+    patch:
+      parameters:
+        - $ref: '#/parameters/filter__id'
+        - in: body
+          name: filter
+          required: true
+          schema:
+            $ref: '#/definitions/filter'
+        - description: Current value of the _etag field
+          in: header
+          name: If-Match
+          required: true
+          type: string
+      responses:
+        '200':
+          description: filter document updated successfully
+      summary: Updates a filter document
+      tags:
+        - filter
+    put:
+      parameters:
+        - $ref: '#/parameters/filter__id'
+        - in: body
+          name: filter
+          required: true
+          schema:
+            $ref: '#/definitions/filter'
+        - description: Current value of the _etag field
+          in: header
+          name: If-Match
+          required: true
+          type: string
+      responses:
+        '200':
+          description: filter document replaced successfully
+      summary: Replaces a filter document
+      tags:
+        - filter
+  /policy:
+    get:
+      responses:
+        '200':
+          description: An array of policy
+          schema:
+            items:
+              $ref: '#/definitions/policy'
+            type: array
+      summary: Retrieves one or more policy
+      tags:
+        - policy
+    post:
+      parameters:
+        - in: body
+          name: policy
+          required: true
+          schema:
+            $ref: '#/definitions/policy'
+      responses:
+        '200':
+          description: operation has been successful
+      summary: Stores one or more policy
+      tags:
+        - policy
+  '/policy/{policyId}':
+    delete:
+      parameters:
+        - $ref: '#/parameters/policy__id'
+        - description: Current value of the _etag field
+          in: header
+          name: If-Match
+          required: true
+          type: string
+      responses:
+        '200':
+          description: policy document deleted successfully
+      summary: Deletes a policy document
+      tags:
+        - policy
+    get:
+      parameters:
+        - $ref: '#/parameters/policy__id'
+      responses:
+        '200':
+          description: policy document fetched successfully
+          schema:
+            $ref: '#/definitions/policy'
+      summary: Retrieves a policy document
+      tags:
+        - policy
+    patch:
+      parameters:
+        - $ref: '#/parameters/policy__id'
+        - in: body
+          name: policy
+          required: true
+          schema:
+            $ref: '#/definitions/policy'
+        - description: Current value of the _etag field
+          in: header
+          name: If-Match
+          required: true
+          type: string
+      responses:
+        '200':
+          description: policy document updated successfully
+      summary: Updates a policy document
+      tags:
+        - policy
+    put:
+      parameters:
+        - $ref: '#/parameters/policy__id'
+        - in: body
+          name: policy
+          required: true
+          schema:
+            $ref: '#/definitions/policy'
+        - description: Current value of the _etag field
+          in: header
+          name: If-Match
+          required: true
+          type: string
+      responses:
+        '200':
+          description: policy document replaced successfully
+      summary: Replaces a policy document
+      tags:
+        - policy
+  /user:
+    get:
+      responses:
+        '200':
+          description: An array of user
+          schema:
+            items:
+              $ref: '#/definitions/user'
+            type: array
+      summary: Retrieves one or more user
+      tags:
+        - user
+    post:
+      parameters:
+        - in: body
+          name: user
+          required: true
+          schema:
+            $ref: '#/definitions/user'
+      responses:
+        '200':
+          description: operation has been successful
+      summary: Stores one or more user
+      tags:
+        - user
+  '/user/{userId}':
+    delete:
+      parameters:
+        - $ref: '#/parameters/user__id'
+        - description: Current value of the _etag field
+          in: header
+          name: If-Match
+          required: true
+          type: string
+      responses:
+        '200':
+          description: user document deleted successfully
+      summary: Deletes a user document
+      tags:
+        - user
+    get:
+      parameters:
+        - $ref: '#/parameters/user__id'
+      responses:
+        '200':
+          description: user document fetched successfully
+          schema:
+            $ref: '#/definitions/user'
+      summary: Retrieves a user document
+      tags:
+        - user
+    patch:
+      parameters:
+        - $ref: '#/parameters/user__id'
+        - in: body
+          name: user
+          required: true
+          schema:
+            $ref: '#/definitions/user'
+        - description: Current value of the _etag field
+          in: header
+          name: If-Match
+          required: true
+          type: string
+      responses:
+        '200':
+          description: user document updated successfully
+      summary: Updates a user document
+      tags:
+        - user
+    put:
+      parameters:
+        - $ref: '#/parameters/user__id'
+        - in: body
+          name: user
+          required: true
+          schema:
+            $ref: '#/definitions/user'
+        - description: Current value of the _etag field
+          in: header
+          name: If-Match
+          required: true
+          type: string
+      responses:
+        '200':
+          description: user document replaced successfully
+      summary: Replaces a user document
+      tags:
+        - user
+        
+definitions:
+  Client:
+    properties:
+      _id:
+        format: objectid
+        type: string
+    type: object
+  Oplog:
+    properties:
+      _id:
+        format: objectid
+        type: string
+      c: {}
+      i: {}
+      ip: {}
+      o: {}
+      r: {}
+    type: object
+  agent:
+    properties:
+      _id:
+        format: objectid
+        type: string
+      arch:
+        maxLength: 10
+        minLength: 2
+        type: string
+      hostname:
+        maxLength: 200
+        minLength: 3
+        type: string
+      last_seen:
+        format: date-time
+        type: string
+      os:
+        maxLength: 45
+        minLength: 3
+        type: string
+      ostype:
+        maxLength: 45
+        minLength: 3
+        type: string
+      osversion:
+        maxLength: 45
+        minLength: 3
+        type: string
+      tags:
+        items:
+          properties:
+            name:
+              maxLength: 42
+              minLength: 1
+              type: string
+            type:
+              maxLength: 42
+              minLength: 1
+              type: string
+          required:
+            - name
+          type: object
+        type: array
+      uuid:
+        maxLength: 36
+        minLength: 36
+        type: string
+      version:
+        maxLength: 45
+        minLength: 3
+        type: string
+    required:
+      - uuid
+      - hostname
+    type: object
+  app:
+    properties:
+      _id:
+        format: objectid
+        type: string
+      category:
+        items:
+          maxLength: 255
+          minLength: 1
+          type: string
+        type: array
+      compatibility:
+        properties:
+          os:
+            enum:
+              - windows
+              - linux
+              - macosx
+              - android
+              - ios
+            items:
+              type: string
+            type: array
+          ostype:
+            enum:
+              - server
+              - workstation
+              - mobile
+            items:
+              type: string
+            type: array
+        required:
+          - os
+          - ostype
+        type: object
+      configuration:
+        items:
+          properties:
+            description:
+              maxLength: 10000
+              type: string
+            title:
+              maxLength: 255
+              minLength: 1
+              type: string
+            variables:
+              items:
+                properties:
+                  default_value: {}
+                  description:
+                    maxLength: 255
+                    type: string
+                  description_long:
+                    maxLength: 10000
+                    type: string
+                  example: {}
+                  name:
+                    maxLength: 255
+                    minLength: 1
+                    type: string
+                  type:
+                    enum:
+                      - boolean
+                      - integer
+                      - string
+                      - list_of_strings
+                      - schedule
+                    type: string
+                required:
+                  - default_value
+                  - description
+                  - name
+                  - type
+                type: object
+              type: array
+          required:
+            - title
+            - variables
+          type: object
+        type: array
+      description:
+        maxLength: 10000
+        type: string
+      developer:
+        properties:
+          email:
+            maxLength: 255
+            minLength: 1
+            type: string
+          name:
+            maxLength: 255
+            minLength: 1
+            type: string
+          website:
+            maxLength: 255
+            minLength: 1
+            type: string
+        required:
+          - name
+        type: object
+      logo:
+        type: string
+      name:
+        maxLength: 255
+        minLength: 1
+        type: string
+      title:
+        maxLength: 255
+        minLength: 1
+        type: string
+      uappid:
+        maxLength: 36
+        minLength: 36
+        type: string
+      version:
+        maxLength: 45
+        minLength: 3
+        type: string
+    required:
+      - name
+      - uappid
+    type: object
+  filter:
+    properties:
+      _id:
+        format: objectid
+        type: string
+      filters:
+        items:
+          properties:
+            operator:
+              maximum: 4
+              minimum: 1
+              type: integer
+            value:
+              maxLength: 255
+              type: string
+            variable:
+              maximum: 7
+              minimum: 1
+              type: integer
+          required:
+            - operator
+          type: object
+        type: array
+      name:
+        maxLength: 255
+        minLength: 1
+        type: string
+      owner:
+        maxLength: 255
+        minLength: 1
+        type: string
+    required:
+      - owner
+      - name
+    type: object
+  policy:
+    properties:
+      _id:
+        format: objectid
+        type: string
+      actions:
+        items:
+          properties:
+            configuration:
+              items:
+                properties:
+                  value:
+                    maxLength: 255
+                    type: string
+                  variable:
+                    maxLength: 255
+                    type: string
+                required:
+                  - variable
+                type: object
+              type: array
+            enabled:
+              type: boolean
+            name:
+              maxLength: 255
+              minLength: 1
+              type: string
+            uappid:
+              maxLength: 36
+              minLength: 36
+              type: string
+          required:
+            - name
+            - uappid
+          type: object
+        type: array
+      enabled:
+        type: boolean
+      filter:
+        maxLength: 255
+        minLength: 1
+        type: string
+      name:
+        maxLength: 255
+        minLength: 1
+        type: string
+      priority:
+        maximum: 15
+        minimum: 1
+        type: integer
+    required:
+      - priority
+      - filter
+      - name
+    type: object
+  user:
+    properties:
+      _id:
+        format: objectid
+        type: string
+      email:
+        maxLength: 255
+        minLength: 5
+        type: string
+      firstname:
+        maxLength: 255
+        minLength: 1
+        type: string
+      last_seen:
+        format: date-time
+        type: string
+      lastname:
+        maxLength: 255
+        minLength: 1
+        type: string
+      mfa_enabled:
+        type: boolean
+      password:
+        maxLength: 1024
+        minLength: 8
+        type: string
+      roles:
+        items:
+          maxLength: 255
+          minLength: 1
+          type: string
+        type: array
+    required:
+      - firstname
+      - email
+      - lastname
+    type: object

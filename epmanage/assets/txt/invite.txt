@@ -1,0 +1,5 @@
+Hello,
+
+{{ USER_NAME }} ({{ USER_EMAIL}}) invited you to join EPManage.
+
+To join, please click on the following link : {{ URL_TO_JOIN }}
